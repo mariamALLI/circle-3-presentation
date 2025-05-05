@@ -2159,6 +2159,145 @@ transition: fade-out
 transition: fade-out
 ---
 
+##  What is the DOM?
+
+The DOM is a programming interface for HTML and XML documents. It represents the page so that programs can change the structure, style, and content dynamically. When a web page is loaded, the browser creates a DOM tree of the page, where each HTML element is a node (object) in the tree.
+
+```html
+<body>
+  <h1>Hello</h1>
+  <p>Welcome</p>
+</body>
+```
+
+Becomes this DOM tree structure:
+
+- <code>document</code>
+  - <code>html</code>
+    - <code>head</code>
+    - <code>body</code>
+      - <code>h1('Hello')</code>
+      - <code>p('Welcome to my page')</code>
+
+
+<style>
+ h2, h3, h4 {
+     background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  }
+  </style>
+
+---
+transition: fade-out
+---
+
+### Why the DOM is Important
+
+- Enables JavaScript to interact with the page by reading, modifying, adding, or removing content.
+
+- Brings dynamism and interactivity to your website.
+
+- Browsers provide access to the DOM through the `document` object, for example:
+  <code>document.querySelector("p").textContent = "Updated!";</code>
+
+
+### Navigating the DOM
+
+DOM navigation allows you to traverse the tree structure:
+
+🔹 Parent, Child, and Sibling Nodes
+
+- <code>parentNode</code>: Access the immediate parent node.
+
+- <code>childNodes</code>: Retrieve all child nodes, including text, comment, and element nodes.
+
+- <code>children</code>: Get only the child element nodes.
+
+<style>
+ h2, h3, h4 {
+     background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  }
+  </style>
+
+---
+transition: fade-out
+---
+
+
+- <code>firstChild</code> / <code>lastChild</code>: Access the first or last child node (includes text nodes).
+
+- <code>firstElementChild</code> / <code>lastElementChild</code>: Access the first or last child element node.
+
+- <code>nextSibling</code> / <code>previousSibling</code>: Navigate to the next or previous sibling node (includes text nodes).
+
+- <code>nextElementSibling</code> / <code>previousElementSibling</code>: Navigate to the next or previous sibling element node.
+
+
+### Searching the DOM (Selectors)
+
+| Method                          | Purpose                              |
+| ------------------------------- | ------------------------------------ |
+| `getElementById(id)`            | Quickly retrieves **a single element** by its ID. |
+| `getElementsByClassName(class)` | Returns an **HTMLCollection** of elements with the specified class. |
+| `getElementsByTagName(tag)`     | Retrieves all elements with the given tag name. |
+| `querySelector(selector)`       | Returns the **first element** that matches the CSS selector. |
+| `querySelectorAll(selector)`    | Returns a **NodeList** of all elements matching the CSS selector. |
+
+
+<style>
+ h2, h3, h4 {
+     background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  }
+  </style>
+
+---
+transition: fade-out
+---
+
+### Why DOM APIs Are Essential (Searching, Modification, and Navigation)
+
+These methods empower you to:
+
+* Enhance interactivity (e.g., toggle menus, switch themes)
+
+* React to user events (e.g., clicks, hovers, form submissions)
+
+* Dynamically create and update content (e.g., to-do lists, cards, modals)
+
+<style>
+ h2, h3, h4 {
+     background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  }
+  </style>
+
+
+---
+transition: fade-out
+---
+
 ## What Are DOM Events?
 
 DOM events are interactions or occurrences that happen within a web page, such as clicking a button, typing in a text field, or scrolling through content. These events allow your code to respond dynamically, enabling interactive and engaging user experiences.
@@ -3200,6 +3339,43 @@ Semantics are an important part of button design, but that doesn’t mean you ca
 ---
 transition: fade-out
 ---
+
+
+## Names of circle member
+
+**1. Mariam Alli** `contributors`
+
+**2. Iranloye Hannah** `contributors`
+
+**3. Omoshola Elegbede** `contributors`
+
+**4. Adebomojo Ademola** `contributors`
+
+**5. Idowu Olatomiwa Stephen** `contributors`
+
+**6. Joanna Bassey** `contributor`
+
+**7. Chidinma Oparah** `contributors`
+
+**8. Emmanuel Brown Okon** `inactive`
+
+**9.Obiegbusi Emmanuel Cherechukwu** `inactive`
+
+**10.Abdulazeez Ghaniyah Omotayo** `inactive`
+
+<style>
+ h2 {
+      background-color: #2B90B6;
+      background-image: linear-gradient(45deg,#c5d44e 0%, #8c1488f7 25%);
+      background-size: 100%;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+  }
+</style>
+
+
 
 <!-- `Primary actions should be obvious:` Solid, high contrast background colors work great here.
 `Secondary actions should be clear but not prominent:` Outline styles or lower contrast background colors are great options.
