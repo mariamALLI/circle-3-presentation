@@ -637,8 +637,9 @@ function sum() {
 sum();
 ```
 
-Any variable that is declared outside the function can be accessed inside the function. The function is called a global variable.
-example
+Any variable declared outside a function is considered a global variable and can be accessed within the function. 
+
+Example:
 
 ```javascript
 Example;
