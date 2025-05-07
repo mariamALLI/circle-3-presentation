@@ -177,34 +177,27 @@ transition: fade-out
 
 # Module in JavaScript?
 
-Modules in JavaScript allow you to split your code into reusable pieces, making it more maintainable and easier to manage. Each module has its scope, meaning variables and functions are not shared unless explicitly exported.
+Modules in JavaScript enable code to be divided into reusable and maintainable pieces. Each module has its own scope, ensuring variables and functions remain private unless explicitly exported.
+<br>
 
-```javascript
-// math.js
-export const add = (a, b) => a + b;
-```
+## What is Importing & Exporting
+Importing and exporting in JavaScript allow you to share and reuse code across different files, making your code modular and maintainable.
 
-```javascript
-// main.js
-import { add } from './math.js';
-console.log(add(2, 3)); // 5
-```
+#### Examples of export
 
-```javascript
-// multiply.js
+```js
+// utils.js
+// Named export
+export const greet = name => `Hello, ${name}!`;
+
+// Default export
 export default function multiply(a, b) {
   return a * b;
 }
 ```
-<br>
-
-<!--
-You can have a `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
 
 <style>
-h1 {
+h1, h2,h3,h4 {
   background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #146b8c 20%);
   background-size: 100%;
@@ -218,31 +211,42 @@ h1 {
 ---
 transition: fade-out
 ---
+#### Examples of Import
 
-## What is Importing
+`Default Import`
+Used to import the default export from a file.
 
-Importing allows you to bring functions, variables, or classes from another module. You use the import keyword to access the exports from another JavaScript file.
-
-```javascript
-// Default import
-import multiply from './math.js';
+```js
+// app.js
+import multiply from './utils.js';
 console.log(multiply(2, 5)); // 10
 ```
-```javascript
-// Importing everything
-import * as math from './math.js';
-console.log(math.area(5));
-```
-```javascript
-// utils.js
-export const greet = name => `Hello, ${name}!`;
+
+`Named Import`
+Used to import specific named exports.
+
+```js
 // app.js
 import { greet } from './utils.js';
 console.log(greet("Mariam")); // Hello, Mariam!
 ```
 
+`Import Everything`
+Used to import all exports from a file as a single object.
+
+```js
+// app.js
+import * as utils from './utils.js';
+console.log(utils.greet("Mariam")); // Hello, Mariam!
+console.log(utils.default(3, 4)); // 12
+```
+
+This modular approach helps organize your code and makes it easier to maintain and test.
+
+
+
 <style>
-  h2 {
+  h2,h3, h4 {
       background-color: #2B90B6;
       background-image: linear-gradient(45deg, #c5d44e 0%, #146b8c 20%);
       background-size: 100%;
@@ -258,7 +262,7 @@ transition: fade-out
 ---
 
 ## Dynamic Import 
-Dynamic import allows you to load modules only when they are needed using the import() function. It returns a promise and is useful for performance optimization (like code splitting).
+Dynamic import enables loading modules on demand using the `import()` function. It returns a promise, making it ideal for performance optimization, such as code splitting.
 
 ```javascript
 button.addEventListener('click', async () => {
@@ -266,19 +270,15 @@ button.addEventListener('click', async () => {
   console.log(module.add(3, 4));
 });
 ```
+
+<br>
+
+## Form Data
+The FormData object simplifies the creation of key/value pairs representing form fields and their values. It is particularly useful for submitting forms programmatically via JavaScript, especially when interacting with APIs.
+
 ```javascript
-async function loadUtil() {
-  const { greet } = await import('./utils.js');
-  console.log(greet('Mariam'));
-}
-```
-```javascript
-// Conditional dynamic import
-if (condition) {
-  import('./feature.js').then(module => {
-    module.runFeature();
-  });
-}
+const form = document.querySelector('form');
+const formData = new FormData(form);
 ```
 
 <style>
@@ -297,13 +297,7 @@ if (condition) {
 transition: fade-out
 ---
 
-## Form Data
-The FormData object lets you easily construct a set of key/value pairs representing form fields and their values. It’s commonly used to submit forms via JavaScript, especially when working with APIs.
-
-```javascript
-const form = document.querySelector('form');
-const formData = new FormData(form);
-```
+#### Example using append() & get() method
 
 ```javascript
 formData.append('username', 'mariam');
@@ -315,24 +309,8 @@ fetch('/submit', {
 });
 ```
 
-<style>
-  h2 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg,#c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-## The Core Method of FormData
-The FormData object provides core methods such as append(), get(), set(), and entries() to manipulate and retrieve form data dynamically. These methods are especially useful for AJAX form submissions.
+### Core Methods of FormData
+The FormData object provides methods such as `append()`, `get()`, `set()`, and `entries()` to efficiently handle and retrieve form data, making it suitable for dynamic form submissions and AJAX requests.
 
 ```javascript
 const data = new FormData();
@@ -347,10 +325,11 @@ for (let [key, value] of data.entries()) {
 }
 ```
 
+
 <style>
-  h2 {
+  h4,h3 {
       background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
+      background-image: linear-gradient(45deg,#c5d44e 0%, #8c1488f7 25%);
       background-size: 100%;
       -webkit-background-clip: text;
       -moz-background-clip: text;
@@ -364,7 +343,7 @@ transition: fade-out
 ---
 
 ## Best Practices (FormData)
-When using FormData, always validate inputs, avoid sending sensitive data in plaintext, and use appropriate HTTP headers. It’s best to let the browser set Content-Type when using FormData.
+Validate inputs, avoid sending sensitive data in plaintext, and let the browser handle Content-Type headers.
 
 ```javascript
 const form = document.querySelector('#myForm');
@@ -375,7 +354,7 @@ form.addEventListener('submit', e => {
 
 fetch('/api', {
   method: 'POST',
-  body: new FormData(document.querySelector('form')),
+  body: new FormData(form)
 });
 // Do NOT manually set Content-Type when using FormData
 // Let the browser handle it
@@ -393,86 +372,6 @@ fetch('/api', {
   }
   </style>
 
----
-transition: fade-out
----
-
-## Closure and Variable Scope
-A closure is a function that retains access to its outer scope, even after the outer function has finished executing. This is closely tied to JavaScript’s function-level scope and lexical scoping.
-
-```javascript
-function outer() {
-  let count = 0;
-  return function inner() {
-    count++;
-    console.log(count);
-  };
-}
-const counter = outer();
-counter(); // 1
-counter(); // 2
-```
-
-```javascript
-function makeAdder(x) {
-  return function(y) {
-    return x + y;
-  };
-}
-const add5 = makeAdder(5);
-console.log(add5(3)); // 8
-```
-
-<style>
-  h2 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-## Lexical Enviroment
-The lexical environment is the structure that holds variable and function declarations at the time the function is defined, not executed. It forms the basis of how JavaScript scopes variables.
-
-```javascript
-function outer() {
-  let name = 'Mariam';
-  function inner() {
-    console.log(name);
-  }
-  return inner;
-}
-const greet = outer();
-greet(); // Mariam
-```
-```javascript
-let globalVar = 'Global';
-function test() {
-  let localVar = 'Local';
-  console.log(globalVar); // Accessible
-}
-test();
-```
-
-<style>
-  h2 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-  </style>
 
 ---
 transition: fade-out
@@ -480,7 +379,7 @@ transition: fade-out
 
 ## Global Object
 
-The global object provides built-in functions, constants, and global variables accessible from anywhere in your code. In browsers, it’s window, while in Node.js, it’s global.
+The global object serves as a container for built-in functions, constants, and global variables accessible throughout your code. In browsers, this object is `window`, while in Node.js, it is `global`.
 
 ```javascript
 let name = 'Mariam';
@@ -519,110 +418,15 @@ sayHi(); // Hi
 transition: fade-out
 ---
 
-## Named Function Expression (NFE)
-A Named Function Expression is when a function expression has its own name. It’s useful for recursion and debugging because the name is only available inside the function.
-
-```javascript
-const factorial = function fact(n) {
-  return n <= 1 ? 1 : n * fact(n - 1);
-};
-console.log(factorial(5)); // 120
-```
-
-```javascript
-const greet = function sayHello(name) {
-  console.log(`Hello, ${name}`);
-};
-greet('Mariam');
-```
-
-```javascript
-//with an arrow function
-const greet = (name) => {
-  console.log(`Hello, ${name}`);
-};
-greet('Mariam');
-```
-
-<style>
-  h2 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-## The “length” Property
-The length property of a function tells you how many parameters it expects. For arrays or strings, it returns the number of items or characters.
-
-```javascript
-function add(a, b) {}
-console.log(add.length); // 2
-
-const arr = [1, 2, 3];
-console.log(arr.length); // 3
-
-const greet = function(name, age, city) {};
-console.log(greet.length); // 3
-```
-
-<style>
-  h2 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-
 ## Functions in JavaScript
+Functions are reusable blocks of code designed to perform specific tasks. They help organize, structure, and maintain code by encapsulating logic that can be executed multiple times. Defined using the `function` keyword, functions are essential for creating modular and readable programs in JavaScript.
 
-Functions allow you to write reusable code that can be executed multiple times without duplication.
-
-They are a core concept in JavaScript, enabling developers to encapsulate tasks such as returning values based on inputs or performing specific calculations.
-
-Functions help organize and structure your code, making it more readable and maintainable. In JavaScript, a function is a block of code created to accomplish a specific task.
-
-Functions play a crucial role in programming.
-
-To define a function, use the `function` keyword.
-
-## Type of Function
 There are two types of functions in JavaScript:
 1. **`Built-in Functions`**: These are functions that are already available in JavaScript and can be used 
 2. **`User-defined Functions`**: These are functions that are created by the user to perform a specific task.
+   
+<br>
 
-<style>
-  h2 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
 ### Functions Without Parameters
 
 In JavaScript, a function without parameters is defined and called without requiring any arguments.
@@ -637,21 +441,9 @@ function sum() {
 sum();
 ```
 
-Any variable declared outside a function is considered a global variable and can be accessed within the function. 
-
-Example:
-
-```javascript
-Example;
-let gretting = "Hello";
-function sayHi() {
-  console.log(gretting); //access the global variable
-}
-sayHi(); //Result will be Hello
-```
 
 <style>
-  h3 {
+  h2,h3 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -668,12 +460,14 @@ transition: fade-out
 
 ## Functions with Parameters
 
-In JavaScript, a function with parameters is defined to accept inputs, known as parameters. When calling the function, you provide arguments that correspond to these parameters.
+Functions in JavaScript can accept inputs called parameters. These parameters allow you to pass data into the function when calling it, enabling dynamic behavior based on the provided arguments.
+
+### Example:
 
 ```javascript
 Example;
 function displayName(firstName, lastName) {
-  alert(firstName + " " + lastName); // use + to add two values togather
+  alert(`${firstName} ${lastName}`)
 }
 displayName("Idowu", "Tomiwa");
 ```
@@ -711,9 +505,9 @@ transition: fade-out
 
 ## Function Returns
 
-A function with a return statement is one that provides a value or another function as its output. The `return` keyword is used within the function to specify what should be returned. Once the `return` statement is executed, the function stops running immediately. Therefore, the placement of the `return` statement within the function is crucial.
+Functions with a `return` statement output a value or another function. The `return` keyword halts execution immediately, making its placement critical.
 
-Function return example:
+#### Example:
 
 ```javascript
 Example;
@@ -725,44 +519,19 @@ let fullname = ("Olatomiwa", "idowu");
 alert(fullname); //outcome will be Olatomiwa idowu
 ```
 
-```javascript
-Example;
-function addTwoNumber(number1, number2) {
-  const sum = number1 + number1;
-  return sum;
-}
-const result1 = addTwoNumber(20, 30);
-console.log(result1); //outcome will be 40
-```
-
-<style>
-  h2 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
 ## Arrow Functions
 
 Arrow functions in JavaScript provide a concise syntax for writing function expressions. They are widely used for their simplicity and readability.
 
 ```javascript
 let sum = (a, b) => {
-  a + b;
+ return a + b;
 };
+sum(3, 5) // 8
 ```
 
 <style>
-  h2 {
+  h2,h4 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -777,11 +546,12 @@ let sum = (a, b) => {
 transition: fade-out
 ---
 
+
 <v-clicks animate=''>
 
 # Arrays        
 
-An Array in Javascript is a data structure used to store multiple values in a single variable. These values can be of any types: numbers, strings, objects, or even other arrays. Arrays in Javascript are 0-based indexed. This means the first element is at index 0, the second at index 1 and so on. 
+An array in JavaScript is a data structure that stores multiple values in a single variable. These values can be of any type, such as numbers, strings, objects, or even other arrays. Arrays are zero-indexed, meaning the first element is at index 0, the second at index 1, and so on.
 
 ```javascript
 // Empty Array Declaration
@@ -828,32 +598,38 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-# Array Methods       
+### Array Methods 
+Arrays in JavaScript have several methods that can be used to manipulate and access their elements.
 
-### push( ) - Add to end of an Array
-Adds one or more elements to the end of an array and returns the new length.
+#### push( ) & pop()
+The push() methos adds an elements to the end of an array and returns the new length.
+The pop() method removes the last element from an array and returns the removed element.
 
 ```javascript
 const fruits = ['apple', 'banana'];
 fruits.push('orange'); 
-
 // ['apple', 'banana', 'orange']
 ```
-
-### pop() - Remove from end of an Array
-Removes the last element from an array and returns that element.
 
 ```javascript
 const fruits = ['apple', 'banana', 'orange'];
 const last = fruits.pop(); 
-
 // last = 'orange', fruits = ['apple', 'banana']
+```
+
+### shift()
+Removes the first element from an array and returns that element.
+
+```javascript
+const fruits = ['apple', 'banana', 'orange'];
+const first = fruits.shift(); 
+// first = 'apple', fruits = ['banana', 'orange']
 ```
 
 </v-clicks>
 
 <style>
-  h1 {
+  h2,h3,h4 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -870,14 +646,6 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-### shift() - Remove from start of an Array
-Removes the first element from an array and returns that element.
-
-```javascript
-const fruits = ['apple', 'banana', 'orange'];
-const first = fruits.shift(); 
-// first = 'apple', fruits = ['banana', 'orange']
-```
 
 ### unshift() - Add to start of an Array
 Adds one or more elements to the beginning of an array and returns the new length.
@@ -897,6 +665,14 @@ const arr2 = [3, 4];
 const merged = arr1.concat(arr2); // [1, 2, 3, 4]
 ```
 
+### slice() – Extract a portion of an Array
+Returns a shallow copy of a portion of an array (start to end, end not included).
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const subArray = numbers.slice(1, 4); // [2, 3, 4]
+```
+
 </v-clicks>
 
 <style>
@@ -917,14 +693,6 @@ transition: fade-out
 
 
 <v-clicks animate=''>
-
-### slice() – Extract a portion of an Array
-Returns a shallow copy of a portion of an array (start to end, end not included).
-
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const subArray = numbers.slice(1, 4); // [2, 3, 4]
-```
 
 ### splice() – Add/Remove elements at any position
 Modifies an array by adding, removing, or replacing elements.
@@ -943,6 +711,14 @@ const numbers = [1, 2, 3];
 const doubled = numbers.map(num => num * 2); // [2, 4, 6]
 ```
 
+### sort() – Order Elements
+Sorts elements in place (default: lexicographical order).
+
+```javascript
+const fruits = ['banana', 'apple', 'orange'];
+fruits.sort(); // ['apple', 'banana', 'orange']
+```
+
 </v-clicks>
 
 <style>
@@ -962,14 +738,6 @@ transition: fade-out
 ---
 
 <v-clicks animate=''>
-
-### sort() – Order Elements
-Sorts elements in place (default: lexicographical order).
-
-```javascript
-const fruits = ['banana', 'apple', 'orange'];
-fruits.sort(); // ['apple', 'banana', 'orange']
-```
 
 ### reverse() – Flip the Array order
 Reverses the order of elements in place.
@@ -987,6 +755,14 @@ const numbers = [1, 2, 3, 4];
 const sum = numbers.reduce((acc, curr) => acc + curr, 0); // 10
 ```
 
+### includes() 
+Checks if an element exists (returns true/false).
+
+```javascript
+const fruits = ['🍎', '🍌', '🍊'];
+console.log(fruits.includes('🍊')); // true
+```
+
 </v-clicks>
 
 <style>
@@ -1007,14 +783,6 @@ transition: fade-out
 
 
 <v-clicks animate=''>
-
-### includes() 
-Checks if an element exists (returns true/false).
-
-```javascript
-const fruits = ['🍎', '🍌', '🍊'];
-console.log(fruits.includes('🍊')); // true
-```
 
 ### filter()
 Returns all elements matching a condition.
@@ -1053,12 +821,11 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-# Objects
+## Objects
 
-In Javascript, an object is a collection of key-value pairs, where keys (also called properties) are strings and values can be any data type, including other objects or functions.
+In JavaScript, an object is a collection of key-value pairs where keys (properties) are strings, and values can be any data type, including other objects or functions. Objects are used to store and organize data, making it easy to access and manipulate.
 
-## Creating an Object
-
+### Creating an Object
 ```javascript
     // Declaration with square curly bracket or braces
     const emptyObject = {};
@@ -1088,7 +855,7 @@ const person = {
 </v-clicks>
 
 <style>
-  h1,h2 {
+  h1,h2,h3 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -1109,9 +876,8 @@ transition: fade-out
 ## Accessing Properties of an Object
 
 In Javascript, you can access the properties of an Object using dot (.) notation or square [] bracket notation
-
 ### Dot Notation
-Use when the property name is valid identifier
+Use dot notation when the property name is a valid JavaScript identifier.
 
 ```javascript
 // Object declaration using object literal (recommended)
@@ -1119,13 +885,11 @@ const person = {
     firstName: 'John',
     lastName: 'Doe',
     age: 30,
-    isStudent: false,
 };
 
 console.log(person.firstName)
 console.log(person.lastName)
 console.log(person.age)
-console.log(person.isStudent)
 ```
 
 </v-clicks>
@@ -1151,7 +915,7 @@ transition: fade-out
 
 ### Square Bracket Notation
 
-Use when the property name is dynamic, contains spaces or starts with a number and can also be used to access properties with valid identifier
+Square bracket notation is useful when the property name is dynamic, includes spaces, starts with a number, or when accessing properties with valid identifiers.
 
 ```javascript
 // Object declaration using object literal (recommended)
@@ -1188,7 +952,7 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-## Object with nested Object
+### Object with nested Object
 
 An Object can also contain other objects 
 
@@ -1202,24 +966,25 @@ const car = {
 }
 ```
 
-## Object with Method
+### Object with Method
 
-Objects can obtain both properties and methods. A method is a function defined as a property of an object, Methods can perform actions using the object's data, often accessed with the {this} keyword. 
+Objects can have both properties and methods. A method is a function defined as a property of an object. Methods can perform actions using the object's data, often accessed with the `this` keyword.
 
 ```javascript
-// Object declaration using object literal (recommended)
 const user = {
-    name: 'Alice',
-    great: function () {
-        console.log(`Hello, I'm ${this.name}`);
-    }
+  name: 'Alice',
+  greet: function () {
+    console.log(`Hello, I'm ${this.name}`);
+  }
 };
-user.great();
+
+user.greet(); // Output: Hello, I'm Alice
 ```
+
 </v-clicks>
 
 <style>
-  h2 {
+  h3,h4 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -1239,24 +1004,32 @@ transition: fade-out
 
 # Loops
 
-Loops allow you to execute a block of code repeatedly. JavaScript provides several types of loops for different use cases. Below's a breakdown of each with examples
+Loops enable the repeated execution of a block of code. JavaScript offers various types of loops tailored for specific scenarios:
 
-## 1. for Loop
-Best for when you know how many times you want to loop.
+1. **for Loop**: Ideal when the number of iterations is known.
+  ```javascript
+  for (let i = 0; i < 5; i++) {
+    console.log(i); // 0, 1, 2, 3, 4
+  }
+  ```
 
-```javascript
-for (initialization; condition; increment) {
-  // code to run
-}
+2. **while Loop**: Executes as long as a condition is true, suitable for unknown iteration counts.
+  ```javascript
+  let i = 0;
+  while (i < 5) {
+    console.log(i); // 0, 1, 2, 3, 4
+    i++;
+  }
+  ```
 
-for (let i = 0; i < 5; i++) {
-  console.log(i); // 0, 1, 2, 3, 4
-}
-```
-
-## 2. while Loop
-
-Runs while a condition is true. Best when the number of iterations is unknown.
+3. **do...while Loop**: Runs at least once before checking the condition.
+  ```javascript
+  let i = 0;
+  do {
+    console.log(i); // 0
+    i++;
+  } while (i < 0);
+  ```
 
 </v-clicks>
 
@@ -1278,81 +1051,22 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-```javascript
-while (condition) {
-  // code to run
-}
-
-let i = 0;
-while (i < 5) {
-  console.log(i); // 0, 1, 2, 3, 4
-  i++;
-}
-```
-
-## 3. do...while Loop
-Similar to while, but runs at least once before checking the condition.
-
-```javascript
-do {
-  // code to run
-} while (condition);
-
-let i = 0;
-do {
-  console.log(i); // 0 (even if condition is false)
-  i++;
-} while (i < 0);
-```
-
-</v-clicks>
-
-<style>
-  h2,h1 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
+4. **for...of Loop**: Iterates over iterable objects like arrays.
+  ```javascript
+  const fruits = ['🍎', '🍌', '🍊'];
+  for (const fruit of fruits) {
+    console.log(fruit); // '🍎', '🍌', '🍊'
   }
-  </style>
+  ```
 
----
-transition: fade-out
----
+5. **for...in Loop**: Iterates over the enumerable properties of an object.
+  ```javascript
+  const person = { name: 'John', age: 30 };
+  for (const key in person) {
+    console.log(key, person[key]); // "name John", "age 30"
+  }
+  ```
 
-
-<v-clicks animate=''>
-
-## 4. for...of Loop
-Iterates over iterable array
-```javascript
-for (const element of iterable) {
-  // code to run
-}
-
-const fruits = ['🍎', '🍌', '🍊'];
-for (const fruit of fruits) {
-  console.log(fruit); // '🍎', '🍌', '🍊'
-}
-```
-
-## 5. for...in Loop
-Iterates over enumerable properties of an object (keys).
-
-```javascript
-for (const key in object) {
-  // code to run
-}
-
-const person = { name: 'John', age: 30 };
-for (const key in person) {
-  console.log(key, person[key]); 
-  // "name John", "age 30"
-}
-```
 
 </v-clicks>
 
@@ -1376,19 +1090,12 @@ transition: fade-out
 
 ## Rest and Spread Operators in JavaScript
 
-JavaScript provides two powerful operators that use the same syntax (...) but serve different purposes:
+JavaScript provides two versatile operators, both using the `...` syntax but serving distinct purposes:
 
-1. Spread Operator (...): Expands an iterable (array, string, object) into individual elements.
+1. **`Spread Operator (...):`** Expands elements from an iterable (e.g., arrays, objects, strings) into individual elements.
+2. **`Rest Operator (...):`** Collects multiple elements into a single variable, often used in function parameters.
 
-2. Rest Operator (...): Collects multiple elements into a single variable (mostly used in functions)
-
-
-##  Spread Operator (...)
-Used to expand elements from an iterable (arrays, objects, strings).
-
-## Use Cases:
-### A. Copying & Merging Arrays
-
+#### Spread Operator Use Cases:
 ```javascript
 const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
@@ -1396,11 +1103,19 @@ const arr2 = [4, 5, 6];
 // Copy an array
 const copy = [...arr1]; // [1, 2, 3]
 ```
+```javascript
+// Merge arrays
+const merged = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
+
+// Insert elements
+const newArr = [0, ...arr1, 4]; // [0, 1, 2, 3, 4]
+```
+
 
 </v-clicks>
 
 <style>
-  h2,h1 {
+  h2,h4 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -1417,13 +1132,6 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-```javascript
-// Merge arrays
-const merged = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
-
-// Insert elements
-const newArr = [0, ...arr1, 4]; // [0, 1, 2, 3, 4]
-```
 
 ### B. Copying & Merging Objects
 
@@ -1469,11 +1177,12 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-##   Rest Operator (...) 
-Used to collect remaining elements into a single variable (mostly in function parameters).
+## Rest Operator (...)
+The rest operator is used to gather the remaining elements into a single variable, often utilized in function parameters.
 
-## Use Cases:
-### A. Function Parameters
+
+### Use Cases:
+#### A. Function Parameters
 
 ```javascript
 function sum(...numbers) {
@@ -1484,7 +1193,7 @@ sum(1, 2, 3); // 6
 sum(5, 10, 15, 20); // 50
 ```
 
-### B. Destructuring Arrays
+#### B. Destructuring Arrays
 
 ```javascript
 const nums = [1, 2, 3, 4, 5];
@@ -1498,7 +1207,7 @@ console.log(rest); // [3, 4, 5]
 </v-clicks>
 
 <style>
-  h2,h3 {
+  h2,h3,h4 {
      background-color: #2B90B6;
   background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
   background-size: 100%;
@@ -1556,17 +1265,14 @@ logNames(...names); // Spread in call, rest in function
 transition: fade-out
 ---
 
-
 # Differences between Spread and Rest Operators
 
-| **Operator**                          | **Differences**                                                            |
-|--------------------------------------|-----------------------------------------------------------------------------|
-| **Spread Operator (...)**            | - Expands Elements                                                          |
-|                                      | - Objects, Arrays and Function Calls                                        |
-|                                      | - Example: ({...obj}  [...arr] )                                            |
-| **Rest Operator (...)**              | - Collects elements                                                         |
-|                                      | - Function parameters, destructuring                                        |
-|                                      | - Example: function(...args)                                                |
+| **Operator**           | **Description**                                                                 |
+|------------------------|---------------------------------------------------------------------------------|
+| **Spread Operator**    | - Expands elements from arrays, objects, or function calls.                     |
+|                        | - Example: `{...obj}`, `[...arr]`.                                              |
+| **Rest Operator**      | - Collects multiple elements into a single variable (e.g., function parameters).|
+|                        | - Example: `function(...args)`.                                                |
 
 <style>
   h1 {
@@ -1587,17 +1293,15 @@ transition: fade-out
 
 <v-clicks animate=''>
 
-# Callback Functions in Javascript 
+## Callback Functions in JavaScript
 
-A callback function is a function passed into another function as an argument and executed later some operation completes. Callbacks are essential for:
+A callback function is a function passed as an argument to another function and executed after a specific operation completes. They are crucial for:
 
-- Asynchronous operations (e.g. setTimeout, fetch)
+- **Asynchronous operations**: Examples include `setTimeout` and `fetch`.
+- **Event handling**: Used in methods like `addEventListener`.
+- **Higher-order functions**: Utilized in array methods like `map`, `filter`, and `forEach`.
 
-- Event handling (e.g. addEventListener)
-
-- Higher-order functions (e.g. map, filter, forEach)
-
-## Example: Simple Callback
+### Example: Simple Callback
 
 ```javascript
 function greet(name, callback) {
@@ -1611,51 +1315,6 @@ function sayGoodbye() {
 
 greet("Alice", sayGoodbye);
 // Output: "Hello, Alice!" "Goodbye!"
-```
-</v-clicks>
-
-<style>
-  h2,h1 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-<v-clicks animate=''>
-
-## Why use Callbacks?
-
-### A. Handling Asynchronous Operation
-
-JavaScript is single-threaded (only execute one piece of code at a time), so callbacks help manage async tasks like:
-
-- Timers (setTimeout, setInterval)
-
-- API calls (fetch, XMLHTTPRequest)
-
-```javascript
-//Example
-setTimeout(() => {
-  console.log("This runs after 2 seconds"); //Callback, Execute after 2 seconds
-}, 2000);
-```
-
-### B. Event Listeners
-Callbacks respond to user interactions (clicks, keypresses, etc.).
-
-```javascript
-button.addEventListener("click", () => {
-  console.log("Button clicked!");
-});
 ```
 </v-clicks>
 
@@ -1675,35 +1334,30 @@ button.addEventListener("click", () => {
 transition: fade-out
 ---
 
-
 <v-clicks animate=''>
 
-## C. Array Methods
+## Why Use Callbacks?
 
-Many array methods accept callbacks:
-
-```javascript
-//Example
-const numbers = [1, 2, 3];
-numbers.forEach(num => console.log(num * 2)); // 2, 4, 6
-```
-
-## Types of Callbacks
-### A. Synchronous Callbacks
-They are callbacks that are executed immediately (e.g., Array.map, Array.filter).
+### Managing Asynchronous Operations
+JavaScript is single-threaded, so callbacks handle async tasks like:
+- **Timers**: `setTimeout`, `setInterval`
+- **API Calls**: `fetch`, `XMLHTTPRequest`
 
 ```javascript
-const doubled = [1, 2, 3].map(num => num * 2); // [2, 4, 6]
+setTimeout(() => {
+  console.log("This runs after 2 seconds");
+}, 2000);
 ```
 
-### B. Asynchronous Callbacks
-Executed after an async operation (e.g., setTimeout, fetch).
+### Event Listeners
+Callbacks respond to user interactions such as clicks or keypresses.
 
 ```javascript
-fetch("https://api.example.com/data")
-  .then(response => response.json()) // Callback
-  .then(data => console.log(data)); // Another callback
+button.addEventListener("click", () => {
+  console.log("Button clicked!");
+});
 ```
+
 </v-clicks>
 
 <style>
@@ -1725,13 +1379,19 @@ transition: fade-out
 <v-clicks animate=''>
 
 ## Making API Calls in JavaScript: Promises, async/await, and Error Handling
-API calls are how you fetch or send data to servers. In JavaScript, this is commonly done using fetch() or libraries like Axios. Calls can be GET, POST, PUT, or DELETE based on the operation.
 
-Modern JavaScript offers multiple methods for managing API calls effectively. Below is a detailed overview of the key approaches:
+API calls enable communication with servers to fetch or send data. JavaScript provides tools like `fetch()` and libraries such as Axios to handle these operations, including GET, POST, PUT, and DELETE requests.
 
-### Making API Calls with XMLHttpRequest (XHR)
-XMLHttpRequest (XHR) is a legacy method for making HTTP requests in JavaScript, widely used before the introduction of `fetch` and `libraries like axios`. While modern applications favor fetch or axios for their simplicity and features, understanding XHR remains valuable for working with older codebases.
+### Key Approaches:
 
+1. **Promises**: Use `.then()` and `.catch()` to handle asynchronous operations.
+2. **async/await**: Simplifies asynchronous code, making it more readable and easier to manage.
+3. **Error Handling**:
+  - Use `try...catch` with `async/await` for robust error management.
+  - Check `response.ok` or `response.status` in `fetch()` to handle HTTP errors.
+4. **Parallel Requests**: Use `Promise.all` for simultaneous API calls to improve performance.
+
+These methods ensure efficient and maintainable API interactions in modern JavaScript applications.
 </v-clicks>
 
 <style>
@@ -1750,53 +1410,12 @@ XMLHttpRequest (XHR) is a legacy method for making HTTP requests in JavaScript, 
 transition: fade-out
 ---
 
-<v-clicks animate=''>
-
-### Basic GET Request with XHR
-
-```javascript
-const xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://api.example.com/data', true); // Async=true
-
-xhr.onload = function() {
-  if (xhr.status >= 200 && xhr.status < 300) {
-    const data = JSON.parse(xhr.responseText);
-    console.log(data);
-  } else {
-    console.error('Request failed:', xhr.statusText);
-  }
-};
-
-xhr.onerror = function() {
-  console.error('Network error');
-};
-
-xhr.send();
-```
-
-</v-clicks>
-
-<style>
-  h2,h3 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
 
 <v-clicks animate=''>
 
 ## The Fetch API 
 
-The Fetch API provides a modern and promise-based approach for making network requests in JavaScript, such as retrieving resources from a server. It serves as a more streamlined and powerful alternative to the older XMLHttpRequest (XHR) method, offering improved readability and ease of use.
+The Fetch API is a modern, promise-based method for making network requests in JavaScript. It simplifies retrieving resources from a server and offers a cleaner, more readable alternative to the older XMLHttpRequest (XHR) approach.
 
 #### Basic Syntax
 ```javascript
@@ -1854,25 +1473,6 @@ fetch('https://api.example.com/data')
     console.error('There was a problem:', error);
   });
 ```
-</v-clicks>
-
-<style>
-  h2,h3 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-<v-clicks animate=''>
 
 ### Making a POST Request with Fetch API
 
@@ -1966,49 +1566,6 @@ async function fetchData() {
 fetchData();
 ```
 </v-clicks>
-
-<style>
-  h2,h3, h4 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
-
----
-transition: fade-out
----
-
-<v-clicks animate=''>
-
-### Handling Different HTTP Errors
-Not all failed HTTP requests throw an error automatically (e.g., 404 or 500). You should check response.ok or response.status.
-
-```javascript
-async function getUser(userId) {
-  try {
-    const response = await fetch(`https://api.example.com/users/${userId}`);
-    
-    if (!response.ok) { // Checks for 4xx/5xx errors
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    
-    const user = await response.json();
-    console.log(user);
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-  }
-}
-
-getUser(123);
-```
-</v-clicks>
-
 
 <style>
   h2,h3, h4 {
@@ -2119,29 +1676,26 @@ fetchMultipleData();
 transition: fade-out
 ---
 
-<v-clicks animate=''>
-
-## Best Practices
-
-### Always Use try/catch
-- Ensures errors are caught and handled gracefully.
-- Prevents unhandled Promise rejections.
-
-### Check response.ok in fetch
-- fetch only rejects on network failures, not HTTP errors (404, 500).
-- Manually check response.ok or response.status.
 
 
-### Use async/await with Promise.all for Parallel Requests
-- Improves performance by running multiple requests simultaneously.
-
-### Summary
-- async/await + try/catch → Best for clean, readable async code.
+## Best Practices for Making API Calls
+- async/await + try/catch → Best for clean, readable async code, Prevents unhandled Promise rejections.
 
 - Always check response.ok in fetch → HTTP errors don’t auto-reject.
 
 - Use Promise.all for parallel requests → Faster than sequential calls.
-</v-clicks>
+
+## What is the DOM?
+
+The DOM (Document Object Model) is a programming interface for HTML and XML documents. It represents the structure of a web page as a tree of nodes, where each HTML element is a node. This allows programs to dynamically modify the page's structure, style, and content.
+
+
+```html
+<body>
+  <h1>Hello</h1>
+  <p>Welcome</p>
+</body>
+```
 
 <style>
  h2, h3, h4 {
@@ -2160,16 +1714,7 @@ transition: fade-out
 transition: fade-out
 ---
 
-##  What is the DOM?
 
-The DOM is a programming interface for HTML and XML documents. It represents the page so that programs can change the structure, style, and content dynamically. When a web page is loaded, the browser creates a DOM tree of the page, where each HTML element is a node (object) in the tree.
-
-```html
-<body>
-  <h1>Hello</h1>
-  <p>Welcome</p>
-</body>
-```
 
 Becomes this DOM tree structure:
 
@@ -2180,6 +1725,17 @@ Becomes this DOM tree structure:
       - <code>h1('Hello')</code>
       - <code>p('Welcome to my page')</code>
 
+<br>
+
+### Why the DOM is Important
+
+- Enables JavaScript to interact with the page by reading, modifying, adding, or removing content.
+
+- Brings dynamism and interactivity to your website.
+
+- Browsers provide access to the DOM through the `document` object, for example:
+  <code>document.querySelector("p").textContent = "Updated!";</code>
+
 
 <style>
  h2, h3, h4 {
@@ -2196,15 +1752,6 @@ Becomes this DOM tree structure:
 ---
 transition: fade-out
 ---
-
-### Why the DOM is Important
-
-- Enables JavaScript to interact with the page by reading, modifying, adding, or removing content.
-
-- Brings dynamism and interactivity to your website.
-
-- Browsers provide access to the DOM through the `document` object, for example:
-  <code>document.querySelector("p").textContent = "Updated!";</code>
 
 
 ### Navigating the DOM
@@ -2219,6 +1766,16 @@ DOM navigation allows you to traverse the tree structure:
 
 - <code>children</code>: Get only the child element nodes.
 
+- <code>firstChild</code> / <code>lastChild</code>: Access the first or last child node (includes text nodes).
+
+- <code>firstElementChild</code> / <code>lastElementChild</code>: Access the first or last child element node.
+
+- <code>nextSibling</code> / <code>previousSibling</code>: Navigate to the next or previous sibling node (includes text nodes).
+
+- <code>nextElementSibling</code> / <code>previousElementSibling</code>: Navigate to the next or previous sibling element node.
+
+
+
 <style>
  h2, h3, h4 {
      background-color: #2B90B6;
@@ -2234,15 +1791,6 @@ DOM navigation allows you to traverse the tree structure:
 ---
 transition: fade-out
 ---
-
-
-- <code>firstChild</code> / <code>lastChild</code>: Access the first or last child node (includes text nodes).
-
-- <code>firstElementChild</code> / <code>lastElementChild</code>: Access the first or last child element node.
-
-- <code>nextSibling</code> / <code>previousSibling</code>: Navigate to the next or previous sibling node (includes text nodes).
-
-- <code>nextElementSibling</code> / <code>previousElementSibling</code>: Navigate to the next or previous sibling element node.
 
 
 ### Searching the DOM (Selectors)
@@ -2256,25 +1804,7 @@ transition: fade-out
 | `querySelectorAll(selector)`    | Returns a **NodeList** of all elements matching the CSS selector. |
 
 
-<style>
- h2, h3, h4 {
-     background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
 ### Why DOM APIs Are Essential (Searching, Modification, and Navigation)
-
-These methods empower you to:
 
 * Enhance interactivity (e.g., toggle menus, switch themes)
 
@@ -2282,6 +1812,7 @@ These methods empower you to:
 
 * Dynamically create and update content (e.g., to-do lists, cards, modals)
 
+
 <style>
  h2, h3, h4 {
      background-color: #2B90B6;
@@ -2293,7 +1824,6 @@ These methods empower you to:
   -moz-text-fill-color: transparent;
   }
   </style>
-
 
 ---
 transition: fade-out
@@ -2302,13 +1832,19 @@ transition: fade-out
 ## What Are DOM Events?
 
 DOM events are interactions or occurrences that happen within a web page, such as clicking a button, typing in a text field, or scrolling through content. These events allow your code to respond dynamically, enabling interactive and engaging user experiences.
-
-#### Common DOM Events
+Common DOM Events are:
 
 - `click` – when you click on something
 - `mouseover` – when you hover over something
 - `keydown` – when a key is pressed
 - `submit` – when a form is submitted
+
+## What Is an Event Handler?
+
+An `event handler` is a function that is called in response to an event. There are 3 common ways:
+- HTML attribute
+- DOM-property
+- addEventListener method
 
 <style>
   h2, h4 {
@@ -2319,33 +1855,6 @@ DOM events are interactions or occurrences that happen within a web page, such a
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
-
-## What Is an Event Handler?
-
-An `event handler` is a function that is called in response to an event. 
-
-### Ways to Attach Event Handlers
-
-There are 3 common ways:
-- HTML attribute
-- DOM-property
-- addEventListener method
-
-<style>
-  h2,h3 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
   }
   </style>
 
@@ -2537,6 +2046,7 @@ By using the event object, you can make your event handlers more dynamic and res
 transition: fade-out
 ---
 
+
 ## Event Listener vs Event Object
 
 - *Event listener* listens for an event (eg a click)
@@ -2551,7 +2061,7 @@ Imagine someone knocks on your door.
 - The *`object`* is the explanation of the knock—how loud it was, how many times they knocked, etc.
 
 <style>
-  h2 {
+  h2,h3 {
       background-color: #2B90B6;
       background-image: linear-gradient(45deg, #c5d44e 0%, #146b8c 20%);
       background-size: 100%;
@@ -2570,28 +2080,9 @@ transition: fade-out
 
 DOM modification allows developers to dynamically interact and update the structure,style and content of a webpage,There are various methods and techniques used in manipulating a DOM.
 
-- Text/Content Modification
-- Attributes Modification
-- CSS Style Modification
-- Create & Replacing Elements
-- Remove & RemoveChild Elements
-- Insert & Append Elements
-
-<style>
-  h2 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg, #c5d44e 0%, #146b8c 20%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-  </style>
-
----
-transition: fade-out
----
+- Text/Content Modification & Attributes Modification
+- CSS Style Modification & Create & Replacing Elements
+- Remove & RemoveChild Elements & Insert & Append Elements
 
 ### Text/Content Modification
 
@@ -2613,8 +2104,9 @@ transition: fade-out
 </script>
 ```
 
+
 <style>
-  h3 {
+  h2,h3,h4 {
       background-color: #2B90B6;
       background-image: linear-gradient(45deg, #c5d44e 0%, #146b8c 20%);
       background-size: 100%;
@@ -3190,57 +2682,9 @@ transition: fade-out
 
 <br>
 
-1. #### Choose a Personality: Fonts, colors, border and language define your app’s personality.
-- `FONTS`:
-1. Typography plays a huge part in determining how a design feels.
-2. If you want an elegant or classic look, you might want to incorporate a serif typeface font in your design. 
-3. For a playful look, you could use a rounded sans serif
-4. If you’re going for a plainer look, or want to rely on other elements to provide the personality, a neutral sans serif works great:
+4. #### Choose a Personality: Fonts, colors, border and language define your app’s personality.
 
-
-<style>
- h4 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg,#c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-</style>
-
----
-transition: fade-out
----
-
-- `COLORS`:
-You need to understand the feel of color as an individual.
-1. Blue is safe and familiar — nobody ever complains about blue.
-2. Gold might say “expensive” and “sophisticated”.
-3. Pink is a bit more fun, and not so serious:
-
-<br>
-
-- `BORDER RADIUS`:
-1. A small border radius is pretty neutral, and doesn’t really communicate much of a personality on its own.
-2. A large border radius starts to feel more playful.
-3. While no border radius at all feels a lot more serious or formal
-
-<br>
-
--	`LANGUAGE`:
-1. While not a visual design technique per se, the words you use in an interface have a massive influence on the overall personality.
-2. Using a less personal tone might feel more official or professional.
-3. While using friendlier, more casual language makes a site feel, well, friendlier:
-
----
-transition: fade-out
----
-
-5. #### Limit Your Choices: 
-   Use a predefined set of `colors`, `fonts`, and `sizes` to make design decisions easier.
--  `Systematise Everything:`
+5. #### Systematise Everything:
 	The more systems you have in place, the faster you’ll be able to work and the
 	less you’ll second guess your own decisions. You’ll want systems for things like:
 	• `Font size`
@@ -3255,18 +2699,6 @@ transition: fade-out
 	• `Border width`
 	• `Opacity`
 
-6. `Not All Elements Are Equal`:Emphasize important elements and de-emphasize secondary ones.
-
-7. #### Size Isn’t Everything:
-   Font weight and color are also useful for creating emphasis. Instead of leaving all of the heavy lifting to font size alone, try using `font weight` or `color` to do the same job.
-- `Try and stick to two or three colors`:
-		 A dark color for primary content (like the headline of an article)
-		• A grey for secondary content (like the date an article was published)
-		• A lighter grey for tertiary content (maybe the copyright notice in a
-				footer) Similarly, two font weights are usually enough for UI work:
-		• A normal font weight (400 or 500 depending on the font) for most text
-		• A heavier font weight (600 or 700) for text you want to emphasize
- 
 
 <style>
  h4 {
@@ -3284,42 +2716,10 @@ transition: fade-out
 transition: fade-out
 ---
 
-8. #### Avoid Grey Text on Colored Backgrounds:
+6. #### Avoid Grey Text on Colored Backgrounds:
     Instead, pick a color that works well with the background. For example when you have a dark green background, the best contrast is to use a green color for the text but adjust the saturation and lightness until it looks perfect to you.
 
-9. #### Emphasize by De-emphasizing:
-     Reduce contrast or size of competing elements, so that the main element can stand out through de-emphasising other element around it.
-
-10. #### Labels Are a Last Resort: Only use labels when necessary;
- sometimes formatting is enough to convey meaning, and the format data is written user can easily identify what is what, which gives the developer better opportunity to give respective data the emphasis when necessary. Only use labels when absolutely necessary and requied.
-
-11. #### Separate visual hierarchy from document hierarchy:
- Usually the content in that section should be the focus, not the title. That means that a lot of the time, titles should actually be pretty small. Don’t let the element you’re using influence how you choose to style it, pick elements for semantic purposes and style them however you need to create the best visual hierarchy.
-
-
-<style>
- h4 {
-      background-color: #2B90B6;
-      background-image: linear-gradient(45deg,#c5d44e 0%, #8c1488f7 25%);
-      background-size: 100%;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-text-fill-color: transparent;
-  }
-</style>
-
----
-transition: fade-out
----
-
-12. #### Balance weight and contrast: 
-- `Using contrast to compensate for weight:` A simple and effective way to lower the contrast of the icon by giving it a softer color. This works anywhere you need to balance elements that have different weights. Reducing the contrast works like a counterbalance, making heavier elements feel lighter even though the weight hasn’t changed.
-
-- `Using weight to compensate for contrast:` Just like how reducing contrast helps to 		de-emphasize heavy elements, increasing weight is a great way to add a bit of 				emphasis to low contrast elements. This is useful when things like thin 1px borders are 		too subtle using a soft color, but darkening the color makes the design feel harsh and 		noisy. Making the border a bit heavier by increasing the width helps to emphasize
-		it without losing the softer look.
-
-13. #### Semantics are secondary:
+7.  #### Semantics are secondary:
 Semantics are an important part of button design, but that doesn’t mean you can forget about hierarchy.
 - `Primary actions should be obvious:` Solid, high contrast background colors work great here.
 - `Secondary actions should be clear but not prominent:` Outline styles or lower contrast background colors are great options.
@@ -3341,8 +2741,7 @@ Semantics are an important part of button design, but that doesn’t mean you ca
 transition: fade-out
 ---
 
-
-## Names of circle member
+### Names of circle member
 
 **1. Mariam Alli** `contributors`
 
@@ -3365,7 +2764,7 @@ transition: fade-out
 **10.Abdulazeez Ghaniyah Omotayo** `inactive`
 
 <style>
- h2 {
+ h2,h3 {
       background-color: #2B90B6;
       background-image: linear-gradient(45deg,#c5d44e 0%, #8c1488f7 25%);
       background-size: 100%;
@@ -3375,9 +2774,3 @@ transition: fade-out
       -moz-text-fill-color: transparent;
   }
 </style>
-
-
-
-<!-- `Primary actions should be obvious:` Solid, high contrast background colors work great here.
-`Secondary actions should be clear but not prominent:` Outline styles or lower contrast background colors are great options.
-`Tertiary actions should be discoverable but unobtrusive:` Styling these actions like links is usually the best approach. -->
