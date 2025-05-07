@@ -66,15 +66,12 @@ transition: fade-out
 | **Section**                          | **Topics**                                                                 |
 |--------------------------------------|-----------------------------------------------------------------------------|
 | **1. Module in JavaScript**          | - What are modules?                                                        |
-|                                      | - What is Importing                                                        |
+|                                      | - What is Importing & Exporting                                                      |
 |                                      | - Dynamic Import                                                           |
 | **2. Form Data**                     | - The Core Method of Form Data                                             |
 |                                      | - Best Practices                                                           |
-| **3. Closure and Variable Scope**    | - Lexical Environment                                                      |
-|                                      | - Global Object                                                            |
-|                                      | - Function Object                                                          |
-|                                      | - Named Function Expression (NFE)                                          |
-|                                      | - The “length” property                                                    |
+| **3. Closure and Variable Scope**                                                   | - Global Object                                                            |
+|                                      | - Function Object                                                                                                                                                    |
 
 
 <style>
@@ -88,7 +85,6 @@ transition: fade-out
       -moz-text-fill-color: transparent;
   }
 </style>
-
 
 ---
 transition: fade-out
